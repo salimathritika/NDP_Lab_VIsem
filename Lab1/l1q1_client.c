@@ -11,9 +11,9 @@
 int main() {
     int recb, res;
 
-    int PORT;
-    printf("Input PORT: ");
-    scanf("%d", &PORT);
+    int PORT=3388;
+   // printf("Input PORT: ");
+   // scanf("%d", &PORT);
 
     struct sockaddr_in server;
 
