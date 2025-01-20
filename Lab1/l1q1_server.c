@@ -60,9 +60,9 @@ void splitOddEven(char *arr, int n){
 int main() {
     int r, req, sntb, x, a = 0;
     struct sockaddr_in serv_addr, cli_addr;
-    int PORT;
-    printf("Input PORT: ");
-    scanf("%d", &PORT);
+    int PORT=3388;
+   // printf("Input PORT: ");
+   // scanf("%d", &PORT);
 
     // creating a socket
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
