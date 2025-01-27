@@ -87,6 +87,7 @@ int main() {
         }
         printf("\nParent process - Sorted alphabetical string is: \n");
         printf("%s\n", alpha);
+        printf("\nParent PID:%d PPID:%d\n",pid,getppid());
         printf("\n\n");
     } else {
         // child
@@ -119,6 +120,7 @@ int main() {
         }
         printf("\nChild process - Sorted numerical string is: \n");
         printf("%s\n", num);
+        printf("\nChild PID:%d PPID:%d\n",pid,getppid());
         printf("\n\n");
     }
 
