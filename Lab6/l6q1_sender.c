@@ -40,6 +40,8 @@ int main() {
     }
     if(one%2!=0)
       buff[MAX-1]='1';
+    else
+      buff[MAX-1]='0';
     buff[MAX]='\0';
     res = send(sockfd, buff, sizeof(buff), 0);
     if (res < 0) {
