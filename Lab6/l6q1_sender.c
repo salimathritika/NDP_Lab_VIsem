@@ -31,7 +31,7 @@ int main() {
     
     char buff[MAX+1];
     int one=0;
-    printf("Enter a 7 bit code:");
+    printf("Enter a %d bit code:",(MAX-1));
     scanf("%s",buff);
     for(int i=0;i<MAX-1;i++)
     {
