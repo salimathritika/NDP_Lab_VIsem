@@ -1,1 +1,22 @@
+l7q1
+Explanation of the Code:
 
+    Bucket Size: We define the bucket size as 10 bytes (this is the maximum amount of data that can be held in the bucket).
+    Outgoing Rate: The outgoing rate is set to 1 byte per second.
+    Packet Arrivals: We simulate packet arrivals at given times (1, 2, 3, 5, 6, 8, 11, 12, 15, 16, and 19 seconds), with each packet having a size of 4 bytes.
+    Bucket Operations:
+        Every second, if there's data in the bucket, 1 byte is sent out (the outgoing rate).
+        Packets that arrive are added to the bucket only if there is enough space. If the bucket overflows, the packet is rejected.
+    Tracking Conforming and Non-Conforming Packets: The program keeps count of how many packets conform (fit in the bucket) and how many are rejected due to overflow.
+
+l7q2
+Explanation:
+
+    Replenishment rate (r): Tokens are added to the bucket at 10 KB per second. Every 0.5 seconds, tokens are replenished by 10 * 0.5 = 5 KB.
+    Bucket size (b): The bucket can hold up to 50 KB.
+    Sender interval: The sender attempts to send a packet of size 15 KB every 0.5 seconds.
+    Packet queueing: If there are not enough tokens to send a packet, it gets queued. We keep track of queued packets.
+    Token bucket simulation: The program runs the simulation for a total time of 1.5 seconds, and based on this, calculates:
+        Tokens left after 1.5 seconds.
+        Time until packets start queuing (i.e., when there are not enough tokens to send a packet).
+        Maximum possible burst size when the maximum rate (R = 20 KBps) is enforced.
