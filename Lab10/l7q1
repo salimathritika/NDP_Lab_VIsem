@@ -1,0 +1,50 @@
+FOR ROUTER 1841:
+Router>enable
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface serial 0/0/0
+Router(config-if)#ip address 10.10.10.1 255.255.255.252
+Router(config-if)#no shutdown
+
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to down
+Router(config-if)#exit
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.10.1 255.255.255.0
+Router(config-if)#no shutdown
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+exit
+Router(config)#router rip
+Router(config-router)#network 192.168.10.0
+Router(config-router)#network 10.10.10.0
+Router(config-router)#exit
+Router(config)#
+
+
+FOR ROUTER 2811:
+Router>enable
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface serial 0/2/0
+Router(config-if)#ip address 10.10.10.2 255.255.255.252
+Router(config-if)#no shutdown
+
+%LINK-5-CHANGED: Interface Serial0/2/0, changed state to down
+Router(config-if)#exit
+Router(config)#interface fastEthernet 0/0
+Router(config-if)#ip address 192.168.10.2 255.255.255.0
+Router(config-if)#no shutdown
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+exit
+Router(config)#router rip
+Router(config-router)#network 192.168.10.0
+Router(config-router)#network 10.10.10.0
+Router(config-router)#exit
+Router(config)#

@@ -1,0 +1,241 @@
+Certainly! Below is a step-by-step guide for configuring RIP routing protocol across four routers and two PCs in detail.
+
+---
+
+### **Step 1: Set Up Routers**
+1. **Select the Routers**:  
+   - 1 **Cisco 1841 Router**
+   - 1 **Cisco 2811 Router**
+   - 2 **Cisco 2620XM Routers**
+
+2. **For each router:**
+   a. **Click on the router** to open its configuration.  
+   b. **Turn the router off** by clicking the power button in the simulation workspace.  
+   c. **Drag and drop the WIC-2T module** into slot 0 (this is to add serial ports).  
+   d. **Turn the router back on** by clicking the power button again.  
+
+---
+
+### **Step 2: Connect PCs and Routers**
+1. **Connect the PCs to Routers**:  
+   Use a **Copper Cross-over cable** to connect each PC to the corresponding router.  
+   - For example, **PC1** connects to **Router0's FastEthernet0/0** and **PC2** connects to **Router3's FastEthernet0/0**.  
+
+2. **Connect the Routers via Serial Links**:  
+   Use a **Serial DTE cable** to connect the routers as follows:  
+   - Router0 → Router1 (via Serial0/0/0)  
+   - Router1 → Router2 (via Serial0/0/0)  
+   - Router2 → Router3 (via Serial0/0/0)  
+
+---
+
+### **Step 3: Assign IP Addresses to Routers' Interfaces**
+For each router, assign IP addresses to both the **Serial** and **Ethernet** interfaces.
+
+#### **Router0 Configuration**:
+1. **Enter CLI**:  
+   - Click on **Router0**, go to the CLI (Command Line Interface), and enter configuration mode:
+     ```bash
+     enable
+     config t
+     ```
+
+2. **Configure Serial Interface (for Router0 to Router1)**:
+   ```bash
+   interface serial 0/0/0
+   ip address 10.10.10.1 255.255.255.252
+   no shutdown
+   exit
+   ```
+
+3. **Configure Ethernet Interface** (for Router0 to PC1):
+   ```bash
+   interface fastEthernet 0/0
+   ip address 192.168.10.1 255.255.255.0
+   no shutdown
+   exit
+   ```
+
+4. **Configure RIP**:  
+   Enable RIP routing and advertise the networks:
+   ```bash
+   router rip
+   version 2
+   network 192.168.10.0
+   network 10.10.10.0
+   exit
+   ```
+
+---
+
+#### **Router1 Configuration**:
+1. **Enter CLI**:
+   ```bash
+   enable
+   config t
+   ```
+
+2. **Configure Serial Interface (for Router1 to Router2)**:
+   ```bash
+   interface serial 0/0/0
+   ip address 10.10.10.2 255.255.255.252
+   no shutdown
+   exit
+   ```
+
+3. **Configure Ethernet Interface** (for Router1 to PC2):
+   ```bash
+   interface fastEthernet 0/0
+   ip address 192.168.20.1 255.255.255.0
+   no shutdown
+   exit
+   ```
+
+4. **Configure RIP**:
+   ```bash
+   router rip
+   version 2
+   network 192.168.20.0
+   network 10.10.10.0
+   exit
+   ```
+
+---
+
+#### **Router2 Configuration**:
+1. **Enter CLI**:
+   ```bash
+   enable
+   config t
+   ```
+
+2. **Configure Serial Interface (for Router2 to Router3)**:
+   ```bash
+   interface serial 0/0/0
+   ip address 10.10.10.5 255.255.255.252
+   no shutdown
+   exit
+   ```
+
+3. **Configure Ethernet Interface** (for Router2 to PC3, assuming you have another PC):
+   ```bash
+   interface fastEthernet 0/0
+   ip address 192.168.30.1 255.255.255.0
+   no shutdown
+   exit
+   ```
+
+4. **Configure RIP**:
+   ```bash
+   router rip
+   version 2
+   network 192.168.30.0
+   network 10.10.10.0
+   exit
+   ```
+
+---
+
+#### **Router3 Configuration**:
+1. **Enter CLI**:
+   ```bash
+   enable
+   config t
+   ```
+
+2. **Configure Serial Interface (for Router3 to Router2)**:
+   ```bash
+   interface serial 0/0/0
+   ip address 10.10.10.6 255.255.255.252
+   no shutdown
+   exit
+   ```
+
+3. **Configure Ethernet Interface** (for Router3 to PC2):
+   ```bash
+   interface fastEthernet 0/0
+   ip address 192.168.40.1 255.255.255.0
+   no shutdown
+   exit
+   ```
+
+4. **Configure RIP**:
+   ```bash
+   router rip
+   version 2
+   network 192.168.40.0
+   network 10.10.10.0
+   exit
+   ```
+
+---
+
+### **Step 4: Assign IP Addresses to PCs**
+Each PC should be assigned an IP address within the subnet of the Ethernet interface it is connected to.
+
+#### **PC1 (connected to Router0)**:
+- IP Address: 192.168.10.2
+- Subnet Mask: 255.255.255.0
+- Default Gateway: 192.168.10.1 (Router0’s FastEthernet interface)
+
+#### **PC2 (connected to Router3)**:
+- IP Address: 192.168.40.2
+- Subnet Mask: 255.255.255.0
+- Default Gateway: 192.168.40.1 (Router3’s FastEthernet interface)
+
+---
+
+### **Step 5: Verify Routing and Test Connectivity**
+1. **Verify RIP Configuration**:
+   On each router, check the routing table and RIP configuration:
+   ```bash
+   show ip route
+   show ip protocols
+   show ip rip database
+   ```
+
+2. **Check RIP Routing Tables**:  
+   Ensure that the routers have learned the appropriate routes via RIP. For example, **Router0** should have routes for 192.168.20.0, 192.168.30.0, and 192.168.40.0.
+
+3. **Ping Test**:  
+   - From **PC1**, ping **PC2**:
+     - Open the **command prompt** on **PC1**.
+     - Run the command:  
+       ```bash
+       ping 192.168.40.2
+       ```
+
+4. **Verify that the pings are successful**, which confirms that the RIP protocol is functioning properly and the routers can route traffic between different subnets.
+
+---
+
+### **Step 6: Simulate the Network**
+1. **In the Simulation Mode**:
+   - Open the **Simulation tab** at the top of the screen.
+   - Under **Add Filters**, click to **Remove All** filters, and then **add ICMP and RIP** filters. This will allow you to see the RIP updates and ICMP (ping) requests during the simulation.
+
+2. **Send PDU**:  
+   - In simulation mode, you can manually add a **PDU** (Protocol Data Unit), which is typically an ICMP Echo Request (ping), and see how the routers process the request.
+
+---
+
+### **Final Testing and Troubleshooting**
+- If the pings do not succeed, check the following:
+  1. Verify all interfaces are up (no shutdown).
+  2. Confirm correct IP addresses and subnet masks.
+  3. Check if RIP version 2 is enabled.
+  4. Ensure that the default gateway of each PC is configured correctly.
+  5. Ensure that the **serial links** between routers are properly connected and configured.
+
+Once the configuration is correct, your RIP setup will allow communication between the two PCs through the routers.
+
+---
+
+### **Summary of Key Steps:**
+- Configure each router’s **serial** and **Ethernet** interfaces.
+- Enable **RIP routing protocol** and advertise the connected networks.
+- Ensure each **PC** has the correct IP address and gateway.
+- **Verify routing tables** on the routers and use **ping** to confirm connectivity.
+- **Use the simulation** feature to observe the behavior of the network.
+
+These steps should fully configure and test your RIP routing setup.
